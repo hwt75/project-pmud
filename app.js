@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const router = require('./routes')
 
 // Khai bao thư viện express 
 const app = express();
@@ -20,16 +20,16 @@ app.set('host', host);
 app.set('view engine', 'ejs');
 
 // set up tính năng đọc file json 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json({ type: 'application/json' }))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ type: 'application/json' }));
 
 // set up router 
 
-
+app.use('/',router);
 
 
 // phần này để test xem chạy đc hay ko 
-app.get('/', (req,res) => res.json("test successfully"))
+
 app.listen(app.get('port'), app.get('host'),()=>{
     console.log(`hello Server is running at http://${host}:${port}`);
     })
