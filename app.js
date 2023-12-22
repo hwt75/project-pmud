@@ -17,6 +17,7 @@ app.set('port', port);
 app.set('host', host);
 
 // set up tính năng đọc file ejs
+app.set('views', './view')
 app.set('view engine', 'ejs');
 
 // set up tính năng đọc file json 
@@ -31,7 +32,7 @@ app.use('/',router);
 // phần này để test xem chạy đc hay ko 
 
 app.listen(app.get('port'), app.get('host'),()=>{
-    console.log(`hello Server is running at http://${host}:${port}`);
+    console.log(`Server is running at http://${host}:${port}`);
     })
 
 

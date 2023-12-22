@@ -3,7 +3,7 @@ const UserModel = require("../model/userModel");
 
 class UserController {
     view(req, res, next) {
-        res.render('../view/login.ejs')
+        res.render('login')
     }
     async getAll(req, res, next) {
       await UserModel.getAllData()
