@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const router = require('./routes')
+const router = require('./routes');
+const connection = require('./config/database');
 
 // Khai bao thư viện express 
 const app = express();
@@ -9,6 +10,16 @@ const app = express();
 const port = 3000 ;
 const host = 'localhost';
 
+//test connection
+// app.get('/', async (req, res) => {
+  
+//     if (connection) {
+//         const rows = await connection.raw('SELECT * FROM user');
+//         res.json(rows);
+//     } else {
+//       res.send('Kết nối thất bại!');
+//     }
+// });
 
 // Chạy thư viện express đã khai báo thông qua biến app: 
 
@@ -28,6 +39,8 @@ app.use(bodyParser.json({ type: 'application/json' }));
 
 app.use('/',router);
 
+const userController = require('./controllers/userController');
+app.get('/hosodonxuat', userController.view);
 
 // phần này để test xem chạy đc hay ko 
 
