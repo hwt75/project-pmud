@@ -3,7 +3,7 @@ const { upperCase, lowerCase } = require("../utils/processString");
 
 class UserController {
   view(req, res, next) {
-    res.render("hosodonxuat");
+    res.render("signup");
   }
   async getAll(req, res, next) {
     await UserModel.getAllData()
@@ -26,6 +26,7 @@ class UserController {
         return res.status(400).json("failed to get user data");
       });
   }
+
   async getByName(req, res, next) {
     var name = req.params.name;
     await UserModel.getByName(name)
@@ -37,6 +38,7 @@ class UserController {
         return res.status(400).json("failed to get user data");
       });
   }
+
   async deleteById(req, res, next) {
     var id = req.params.id;
     // var name = upperCase(id)
@@ -76,6 +78,21 @@ class UserController {
           return res.status(400).json("failed to get user data");
         });
     }
+  }
+
+  async postNewUser(req, res, next) {
+   const user = req.body;
+   if (user) {
+    await UserModel.postNewUser(user)
+    .then(() => {
+      res.json(req.body);
+      console.log(req.body);
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(400).json("failed to get user data");
+    });
+   } 
   }
 }
 
