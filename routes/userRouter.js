@@ -5,7 +5,7 @@ const UserController = require('../controllers/userController');
 const router = express.Router();
 
 router.get('/user', UserController.getAll)
-// router.get('/view', UserController.view)
+router.get('/view', UserController.view)
 
 router.get('/get', UserController.getById)
 router.get('/:name', UserController.getByName)

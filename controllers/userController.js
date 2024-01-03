@@ -1,9 +1,9 @@
 const UserModel = require("../model/userModel");
 const { upperCase, lowerCase } = require("../utils/processString");
-
+const { v4: uuidv4 } = require('uuid');
 class UserController {
   view(req, res, next) {
-    res.render("signup");
+    res.render("addUser");
   }
   async getAll(req, res, next) {
     await UserModel.getAllData()
@@ -82,14 +82,14 @@ class UserController {
 
   async postNewUser(req, res, next) {
    const user = req.body;
+   console.log(user);
    if (user) {
+    user.id = uuidv4();
     await UserModel.postNewUser(user)
     .then(() => {
-      res.json(req.body);
-      console.log(req.body);
+      res.json("register successfully");
     })
     .catch((err) => {
-      console.log(err);
       return res.status(400).json("failed to get user data");
     });
    } 

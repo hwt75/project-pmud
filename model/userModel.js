@@ -21,7 +21,7 @@ class UserModel  extends CommonModel {
 
     async postNewUser (user) {
         const { id, name, birth, phoneNumber, email, address, password} = user;
-        return await this.executeQuery(`INSERT INTO nguoi_dung (id, name, birth, phoneNumber, email, address, password) VALUES ( '${id}', '${name}', '${birth}', '${phoneNumber}', '${email}', '${address}', '${password}')`);
+        return await this.executeQuery(`INSERT INTO nguoi_dung (id, name, phoneNumber, email, address, password) VALUES ( '${id}', '${name}', '${phoneNumber}', '${email}', '${address}', '${password}')`);
     }
 }
 module.exports = new UserModel;
