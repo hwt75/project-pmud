@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách người dùng</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="wrapper center">
+        <div class="container">
+            <div class="col-md-12 bg-light p-3 my-3 border border-success rounded-4 shadow-lg">
+                <h1 class="my-3 py-3 text-center">Danh sách người dùng</h1>
+                <form class="d-flex py-3 col-md-4 float-end" role="search">
+                    <input class="form-control me-2 shadow-lg" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Họ và tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Địa chỉ</th>
+                            <th>Thành viên</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        fetch('/user')
+            .then(response => response.json())
+            .then(data => {
+                const userTableBody = document.getElementById('userTableBody');
+
+                // Xóa các dữ liệu người dùng hiện có trong bảng
+                userTableBody.innerHTML = '';
+
+                // Thêm dữ liệu người dùng vào bảng
+                data.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.birth}</td>
+                        <td>${user.phoneNumber}</td>
+                        <td>${user.email}</td>
+                        <td>${user.address}</td>
+                    `;
+                    userTableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Lỗi khi lấy danh sách người dùng:', error);
+            });
+    </script>
+</body>
+
+</html>

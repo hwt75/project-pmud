@@ -3,8 +3,9 @@ const { upperCase, lowerCase } = require("../utils/processString");
 const { v4: uuidv4 } = require('uuid');
 class UserController {
   view(req, res, next) {
-    res.render("addUser");
+    res.render("viewUser");
   }
+  
   async getAll(req, res, next) {
     await UserModel.getAllData()
       .then((data) => {
