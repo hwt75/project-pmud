@@ -11,15 +11,7 @@ class UserController {
   }
   
   editUser(req, res, next) {
-    const id = req.params.id;
-    if(id){
-      
-      res.render("editUser", { id });
-    }
-    else{
-      res.render('errorPage')
-    }
-    
+    res.render("editUser");
   }
   
   async getAll(req, res, next) {
@@ -54,24 +46,6 @@ class UserController {
         console.log(err);
         return res.status(400).json("failed to get user data");
       });
-  }
-
-  async getById(req, res, next) {
-    var id = req.params.id;
-    console.log();
-    if(id){
-      await UserModel.getById(id)
-        .then((data) => {
-          res.json(data);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(400).json("get by id failed")
-        });
-    }
-    else{
-      res.status(400).json("Input id")
-    }
   }
 
   async deleteByPhoneNumber(req, res, next) {

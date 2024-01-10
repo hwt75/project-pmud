@@ -92,7 +92,7 @@
                             <td>${user.email}</td>
                             <td>${user.address}</td>
                             <td>
-                                <form action="/user/editUser/${user.id}">
+                                <form action="/user/editUser">
                                         <button class="btn btn-outline-primary btn-sm edit-button" type ="submit">Sửa</button>
                                          <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
                                 </form>
@@ -122,10 +122,8 @@
                             <td>${user.email}</td>
                             <td>${user.address}</td>
                             <td>
-                                <form action="/user/editUser/${user.id}">
-                                        <button class="btn btn-outline-primary btn-sm edit-button" type ="submit">Sửa</button>
-                                         <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
-                                </form>
+                                 <button class="btn btn-outline-primary btn-sm edit-button">Sửa</button>
+                                 <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
                             </td>
                         `;
                         userTableBody.appendChild(row);
@@ -156,10 +154,8 @@
                     <td>${user.email}</td>
                     <td>${user.address}</td>
                     <td>
-                        <form action="/user/editUser/${user.id}">
-                                        <button class="btn btn-outline-primary btn-sm edit-button" type ="submit">Sửa</button>
-                                         <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
-                                </form>
+                        <button class="btn btn-outline-primary btn-sm edit-button">Sửa</button>
+                        <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
                     </td>
                 `;
                         userTableBody.appendChild(row);
@@ -180,9 +176,6 @@
         // Thực hiện hành động xóa người dùng tương ứng với hàng được nhấn
         console.log('Xóa người dùng với ID:', user.id);
     });
-    const editUser = (id) => {
-        fetch('/user')
-    }
     </script>
 </body>
 

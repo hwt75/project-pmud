@@ -24,12 +24,10 @@ class UserModel extends CommonModel {
       `DELETE FROM nguoi_dung WHERE name = '${name}'`
     );
   }
-  async getById(id) {
-    return await this.executeQuery(`SELECT * FROM nguoi_dung WHERE id = '${id}'`);
-  }
 
   async postNewUser(user) {
-    const { id, name, phoneNumber, email, address} = user;
+    const { id, name, birth, phoneNumber, email, address, password } = user;
+
     // kiểm tra trùng lặp sdt
     const phoneNumberExist = await this.checkDuplicate(
       "nguoi_dung",
@@ -41,7 +39,7 @@ class UserModel extends CommonModel {
     }
 
     return await this.executeQuery(
-      `INSERT INTO nguoi_dung (id, name,  phoneNumber, email, address) VALUES ( '${id}', '${name}' ,'${phoneNumber}', '${email}', '${address}')`
+      `INSERT INTO nguoi_dung (id, name, birth ,phoneNumber, email, address, password) VALUES ( '${id}', '${name}', '${birth}' ,'${phoneNumber}', '${email}', '${address}', '${password}')`
     );
   }
 

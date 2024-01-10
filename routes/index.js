@@ -6,7 +6,5 @@ const router = express.Router();
 
 router.use('/user', UserRouter);
 router.use('/product', ProductRouter);
-router.get('/error',(req,res)=>{
-    res.render('errorPage')
-})
+
 module.exports  = router;
