@@ -7,60 +7,175 @@
     <title>Danh sách người dùng</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
+<style>
+    /* Định cấu hình cho cột ID */
+    .fixed-width-column {
+        max-width: 100px;
+        /* Đặt độ rộng tối đa cho cột */
+        overflow: hidden;
+        /* Che đi nội dung vượt quá độ rộng */
+        white-space: nowrap;
+        /* Ngăn chặn ngắt dòng */
+        text-overflow: ellipsis;
+        /* Hiển thị dấu chấm cuối khi quá dài */
+    }
+</style>
 
 <body>
     <div class="wrapper center">
         <div class="container">
             <div class="col-md-12 bg-light p-3 my-3 border border-success rounded-4 shadow-lg">
                 <h1 class="my-3 py-3 text-center">Danh sách người dùng</h1>
-                <form class="d-flex py-3 col-md-4 float-end" role="search" action="/user/user" method="get">
-                    <input class="form-control me-2 shadow-lg" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex py-5 col-md-4 float-end" role="search" id="searchForm">
+                    <input class="form-control me-2 shadow-lg" type="search" placeholder="Nhập tên" aria-label="Search"
+                        id="searchNameInput">
+                    <input class="form-control me-2 shadow-lg" type="search" placeholder="Nhập SDT"
+                        aria-label="Search by Phone Number" id="searchPhoneNumberInput">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Họ và tên</th>
-                            <th>Ngày sinh</th>
-                            <th>Số điện thoại</th>
-                            <th>Email</th>
-                            <th>Địa chỉ</th>
-                            <th>Thành viên</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userTableBody">
-                    </tbody>
-                </table>
+                <form class="d-flex py-5 col-md-4" action="/user/signUp">
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-danger" type="submit">Thêm người dùng</button>
+                    </div>
+                </form>
+                <form action="/user/user" method="get">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ và tên</th>
+                                <th>Ngày sinh</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                                <th>Địa chỉ</th>
+                                <th>Sửa/Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
     <script>
-        fetch('/user')
-            .then(response => response.json())
-            .then(data => {
-                const userTableBody = document.getElementById('userTableBody');
 
-                // Xóa các dữ liệu người dùng hiện có trong bảng
-                userTableBody.innerHTML = '';
 
-                // Thêm dữ liệu người dùng vào bảng
-                data.forEach(user => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${user.id}</td>
-                        <td>${user.name}</td>
-                        <td>${user.birth}</td>
-                        <td>${user.phoneNumber}</td>
-                        <td>${user.email}</td>
-                        <td>${user.address}</td>
-                    `;
-                    userTableBody.appendChild(row);
+        // Lấy tham chiếu đến các phần tử HTML cần sử dụng
+        const searchForm = document.getElementById('searchForm');
+        const searchNameInput = document.getElementById('searchNameInput');
+        const searchPhoneNumberInput = document.getElementById('searchPhoneNumberInput');
+        const userTableBody = document.getElementById('userTableBody');
+
+        // Xử lý sự kiện khi người dùng nhấn nút tìm kiếm
+        searchForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Ngăn chặn việc gửi yêu cầu form
+
+            const searchNameTerm = searchNameInput.value.trim(); // Lấy giá trị tìm kiếm và loại bỏ khoảng trắng thừa
+            const searchPhoneNumberTerm = searchPhoneNumberInput.value.trim();
+
+            // Gửi yêu cầu tìm kiếm người dùng theo SDT
+            fetch(`/user/getByPhoneNumber/${searchPhoneNumberTerm}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Xóa các dữ liệu người dùng hiện có trong bảng
+                    userTableBody.innerHTML = '';
+
+                    // Thêm dữ liệu người dùng tìm kiếm được vào bảng
+                    data.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class = "fixed-width-column">${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.birth}</td>
+                            <td>${user.phoneNumber}</td>
+                            <td>${user.email}</td>
+                            <td>${user.address}</td>
+                            <td>
+                                <form action="/user/editUser">
+                                        <button class="btn btn-outline-primary btn-sm edit-button" type ="submit">Sửa</button>
+                                         <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
+                                </form>
+                            </td>
+                        `;
+                        userTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tìm kiếm người dùng:', error);
                 });
-            })
-            .catch(error => {
-                console.error('Lỗi khi lấy danh sách người dùng:', error);
-            });
+
+            fetch(`/user/getByName/${searchNameTerm}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Xóa các dữ liệu người dùng hiện có trong bảng
+                    userTableBody.innerHTML = '';
+
+                    // Thêm dữ liệu người dùng tìm kiếm được vào bảng
+                    data.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class = "fixed-width-column">${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.birth}</td>
+                            <td>${user.phoneNumber}</td>
+                            <td>${user.email}</td>
+                            <td>${user.address}</td>
+                            <td>
+                                 <button class="btn btn-outline-primary btn-sm edit-button">Sửa</button>
+                                 <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
+                            </td>
+                        `;
+                        userTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tìm kiếm người dùng:', error);
+                });
+        });
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Gửi yêu cầu lấy danh sách người dùng
+            fetch('/user/user')
+                .then(response => response.json())
+                .then(data => {
+                    const userTableBody = document.getElementById('userTableBody');
+
+                    // Thêm dữ liệu người dùng vào bảng
+                    data.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                    <td class ="fixed-width-column">${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.birth}</td>
+                    <td>${user.phoneNumber}</td>
+                    <td>${user.email}</td>
+                    <td>${user.address}</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm edit-button">Sửa</button>
+                        <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
+                    </td>
+                `;
+                        userTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Lỗi khi lấy danh sách người dùng:', error);
+                });
+        });
+
+        editButton.addEventListener('click', () => {
+        // Thực hiện hành động sửa người dùng tương ứng với hàng được nhấn
+        console.log('Sửa người dùng với ID:', user.id);
+    });
+
+    // Đăng ký sự kiện click cho nút "Xóa"
+    deleteButton.addEventListener('click', () => {
+        // Thực hiện hành động xóa người dùng tương ứng với hàng được nhấn
+        console.log('Xóa người dùng với ID:', user.id);
+    });
     </script>
 </body>
 

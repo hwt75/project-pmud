@@ -2,8 +2,16 @@ const UserModel = require("../model/userModel");
 const { upperCase, lowerCase } = require("../utils/processString");
 const { v4: uuidv4 } = require('uuid');
 class UserController {
-  view(req, res, next) {
+  viewUser(req, res, next) {
     res.render("viewUser");
+  }
+
+  signUp(req, res, next) {
+    res.render("signUp");
+  }
+  
+  editUser(req, res, next) {
+    res.render("editUser");
   }
   
   async getAll(req, res, next) {
@@ -16,9 +24,9 @@ class UserController {
         return res.status(400).json("failed to get user data");
       });
   }
-  async getById(req, res, next) {
-    var id = req.query.id;
-    await UserModel.getById(id)
+  async getByPhoneNumber(req, res, next) {
+    var phoneNumber = req.params.phoneNumber;
+    await UserModel.getByPhoneNumber(phoneNumber)
       .then((data) => {
         res.json(data);
       })
@@ -40,13 +48,13 @@ class UserController {
       });
   }
 
-  async deleteById(req, res, next) {
-    var id = req.params.id;
+  async deleteByPhoneNumber(req, res, next) {
+    var phoneNumber = req.params.phoneNumber;
     // var name = upperCase(id)
-    if (id) {
-      await UserModel.getById(id)
+    if (phoneNumber) {
+      await UserModel.getByPhoneNumber(phoneNumber)
         .then(async (data) => {
-          await UserModel.deleteById(id)
+          await UserModel.deleteByPhoneNumber(phoneNumber)
             .then((data) => {
               res.json(data);
             })
@@ -94,6 +102,29 @@ class UserController {
       return res.status(400).json("failed to get user data");
     });
    } 
+  }
+
+  async updateUser(req, res, next) {
+    const phoneNumber = req.params.phoneNumber;
+    const user = req.body;
+  
+    if (phoneNumber) {
+      UserModel.getByPhoneNumber(phoneNumber)
+        .then(existingUser => {
+          if (existingUser) {
+            return UserModel.updateUser(phoneNumber, user);
+          } else {
+            return res.status(404).json({ message: "user not found" });
+          }
+        })
+        .then(() => res.json(user)) // Trả về sản phẩm đã cập nhật
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({ message: "Internal server error" });
+        });
+    } else {
+      res.status(400).json({ message: "User phone number is required" });
+    }
   }
 }
 

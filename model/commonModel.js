@@ -13,7 +13,11 @@ class CommonModel {
             return false;
     }}
 
-    
+    async checkDuplicate(tableName, columnName, value) {
+        const sql = `SELECT * FROM ${tableName} WHERE ${columnName} = '${value}'`;
+        const result = await this.executeQuery(sql);
+        return result.length > 0;
+    }
 }
 
 module.exports = CommonModel;

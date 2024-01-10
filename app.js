@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes');
 const connection = require('./config/database');
+// const session = require('express-session');
 
 // Khai bao thư viện express 
 const app = express();
@@ -20,6 +21,13 @@ app.set('host', host);
 app.set('views', './view')
 app.set('view engine', 'ejs');
 
+// set up session
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: true,
+//     saveUninitialized: true,
+// }));
+
 // set up tính năng đọc file json 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: 'application/json' }));
@@ -29,7 +37,8 @@ app.use(bodyParser.json({ type: 'application/json' }));
 app.use('/',router);
 
 const userController = require('./controllers/userController');
-app.get('/signup', userController.view);
+app.get('/viewUser', userController.viewUser);
+app.get('/signUp', userController.signUp)
 
 // phần này để test xem chạy đc hay ko 
 

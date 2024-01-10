@@ -12,63 +12,69 @@ class ProductController {
     }
 
     async getById(req, res, next) {
-        var id = req.query.id;
+        var id = req.params.id;
         await ProductModel.getById(id)
           .then((data) => {
             res.json(data);
           })
           .catch((err) => {
             console.log(err);
-            return res.status(400).json("failed to get user data");
+            return res.status(400).json("failed to get product data");
+          });
+    }
+
+    async getByName(req, res, next) {
+      var productName = req.params.productName;
+      await ProductModel.getByName(productName)
+        .then((data) => {
+          res.json(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(400).json("failed to get product data");
+        });
+    }
+
+    async deleteById(req, res, next) {
+      var productId = req.params.productId;
+      // var name = upperCase(id)
+      if (productId) {
+        await ProductModel.getById(productId)
+          .then(async (data) => {
+            await ProductModel.deleteById(productId)
+              .then((data) => {
+                res.json(data);
+              })
+              .catch((err) => {
+                res.status(400).json("delete failed");
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(400).json("failed to get product data");
           });
       }
+    }
 
-    // async updateProduct(req, res, next) {
-    //     var productId = req.params.productId;
-    //     const product = req.body;
-    //     if (productId){
-    //         await ProductModel.getById(productId)
-    //         .then(async () => {
-    //             await ProductModel.updateProduct(product)
-    //             .then(() => {
-    //                 res.json(req.body);
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //                 return res.status(400).json("put failed");
-    //             });
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //             return res.status(400).json("failed to get user data");
-    //         });
-    //     }
-    // }
-
-    // async updateProduct(req, res, next) {
-    //     try {
-    //       const productId = req.params.productId;
-    //       const product = req.body;
-      
-    //       if (productId) {
-    //         // Kiểm tra xem sản phẩm có tồn tại không
-    //         const existingProduct = await ProductModel.getById(productId);
-      
-    //         // Cập nhật sản phẩm nếu nó tồn tại
-    //         if (existingProduct) {
-    //           await ProductModel.updateProduct(productId, product);
-    //           res.json(product); // Trả về sản phẩm đã cập nhật
-    //         } else {
-    //           res.status(404).json({ message: "Product not found" });
-    //         }
-    //       } else {
-    //         res.status(400).json({ message: "Product ID is required" });
-    //       }
-    //     } catch (err) {
-    //       console.error(err);
-    //       res.status(500).json({ message: "Internal server error" });
-    //     }
-    //   }
+    async deleteByName(req, res, next) {
+      var productName = req.params.productName;
+      if (productName) {
+        await ProductModel.getByName(productName)
+          .then(async (data) => {
+            await ProductModelModel.deleteByName(productName)
+              .then((data) => {
+                res.json(data);
+              })
+              .catch((err) => {
+                res.status(400).json("delete failed");
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(400).json("failed to get product data");
+          });
+      }
+    }
 
     async updateProduct(req, res, next) {
       const productId = req.params.productId;

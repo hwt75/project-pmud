@@ -5,14 +5,18 @@ const UserController = require('../controllers/userController');
 const router = express.Router();
 
 router.get('/user', UserController.getAll)
-router.get('/view', UserController.view)
+router.get('/viewUser', UserController.viewUser)
+router.get('/signUp', UserController.signUp)
+router.get('/editUser', UserController.editUser)
 
-router.get('/get', UserController.getById)
-router.get('/:name', UserController.getByName)
+router.get('/getByPhoneNumber/:phoneNumber', UserController.getByPhoneNumber)
+router.get('/getByName/:name', UserController.getByName)
 
-router.delete('/:id', UserController.deleteById)
-router.delete('/:name', UserController.deleteByName)
+router.delete('/delete/:phoneNumber', UserController.deleteByPhoneNumber)
+router.delete('/delete/:name', UserController.deleteByName)
 
 router.post('/post', UserController.postNewUser)
+
+router.put('/edit/:phoneNumber', UserController.updateUser)
 
 module.exports = router
