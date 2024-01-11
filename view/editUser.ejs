@@ -162,10 +162,12 @@
               .then((response) => {
                 // Handle successful response
                 console.log(response.data);
+                window.location.href = '/user/viewuser'
               })
               .catch((error) => {
                 // Handle errors
                 console.error(error);
+                window.location.href = "/error";
               });
           });
         });
