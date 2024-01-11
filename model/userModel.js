@@ -25,11 +25,13 @@ class UserModel extends CommonModel {
     );
   }
   async getById(id) {
-    return await this.executeQuery(`SELECT * FROM nguoi_dung WHERE id = '${id}'`);
+    return await this.executeQuery(
+      `SELECT * FROM nguoi_dung WHERE id = '${id}'`
+    );
   }
 
   async postNewUser(user) {
-    const { id, name, phoneNumber, email, address} = user;
+    const { id, name, phoneNumber, email, address } = user;
     // kiểm tra trùng lặp sdt
     const phoneNumberExist = await this.checkDuplicate(
       "nguoi_dung",
@@ -63,20 +65,16 @@ class UserModel extends CommonModel {
       email: nguoi_dung.email,
       address: nguoi_dung.address,
       password: nguoi_dung.password,
-    })
-      .then((result) => {
-        // Kiểm tra kết quả
-        if (result.affectedRows === 0) {
-          throw new Error("No rows affected");
-        }
+    });
+  }
 
-        return result;
-      })
-      .catch((err) => {
-        // Ghi nhật ký lỗi
-        console.error(err);
-        throw err; // Đẩy lỗi lên để xử lý ở controller
-      });
+  update(user) {
+    return this
+      .executeQuery(`UPDATE nguoi_dung SET name = '${user.name}',  
+    phoneNumber = '${user.phoneNumber}', 
+    email = '${user.email}', 
+    address = '${user.address}', 
+    password = '${user.password}' WHERE id = '${user.id}'`);
   }
 }
 module.exports = new UserModel();
