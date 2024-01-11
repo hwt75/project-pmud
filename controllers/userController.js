@@ -117,7 +117,7 @@ class UserController {
 
   async postNewUser(req, res, next) {
    const user = req.body;
-   console.log(user);
+  
    if (user) {
     user.id = uuidv4();
     await UserModel.postNewUser(user)
@@ -129,7 +129,7 @@ class UserController {
     });
    } 
   }
-
+  
   async updateUser(req, res, next) {
     const phoneNumber = req.params.phoneNumber;
     const user = req.body;
@@ -151,6 +151,23 @@ class UserController {
     } else {
       res.status(400).json({ message: "User phone number is required" });
     }
+  }
+
+  async update(req,res){
+   const user = req.body;
+   console.log(user);
+   if (user) {
+    
+    await UserModel.update(user)
+    .then(() => {
+     return res.json("update successfully");
+    })
+    .catch((err) => {
+      return res.status(400).json("failed to get user data");
+    });
+   } 
+ 
+
   }
 }
 

@@ -16,7 +16,7 @@ router.delete('/delete/:phoneNumber', UserController.deleteByPhoneNumber)
 router.delete('/delete/:name', UserController.deleteByName)
 
 router.post('/post', UserController.postNewUser)
-
+router.post('/update', UserController.update)
 router.put('/edit/:phoneNumber', UserController.updateUser)
 
 module.exports = router
