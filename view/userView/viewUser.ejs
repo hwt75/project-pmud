@@ -22,6 +22,7 @@
 </style>
 
 <body>
+    <%- include('../layouts/nav'); %>
     <div class="wrapper center">
         <div class="container">
             <div class="col-md-12 bg-light p-3 my-3 border border-success rounded-4 shadow-lg">
@@ -58,6 +59,7 @@
             </div>
         </div>
     </div>
+    </main>
     <script>
 
 
@@ -159,7 +161,7 @@
                         <form action="/user/editUser/${user.id}">
                                         <button class="btn btn-outline-primary btn-sm edit-button" type ="submit">Sửa</button>
                                          <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
-                                </form>
+                        </form>
                     </td>
                 `;
                         userTableBody.appendChild(row);
@@ -171,18 +173,18 @@
         });
 
         editButton.addEventListener('click', () => {
-        // Thực hiện hành động sửa người dùng tương ứng với hàng được nhấn
-        console.log('Sửa người dùng với ID:', user.id);
-    });
+            // Thực hiện hành động sửa người dùng tương ứng với hàng được nhấn
+            console.log('Sửa người dùng với ID:', user.id);
+        });
 
-    // Đăng ký sự kiện click cho nút "Xóa"
-    deleteButton.addEventListener('click', () => {
-        // Thực hiện hành động xóa người dùng tương ứng với hàng được nhấn
-        console.log('Xóa người dùng với ID:', user.id);
-    });
-    const editUser = (id) => {
-        fetch('/user')
-    }
+        // Đăng ký sự kiện click cho nút "Xóa"
+        deleteButton.addEventListener('click', () => {
+            // Thực hiện hành động xóa người dùng tương ứng với hàng được nhấn
+            console.log('Xóa người dùng với ID:', user.id);
+        });
+        const editUser = (id) => {
+            fetch('/user')
+        }
     </script>
 </body>
 

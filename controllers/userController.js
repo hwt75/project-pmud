@@ -3,18 +3,18 @@ const { upperCase, lowerCase } = require("../utils/processString");
 const { v4: uuidv4 } = require('uuid');
 class UserController {
   viewUser(req, res, next) {
-    res.render("viewUser");
+    res.render("./userView/viewUser");
   }
 
   signUp(req, res, next) {
-    res.render("signUp");
+    res.render("./userView/signUp");
   }
   
   editUser(req, res, next) {
     const id = req.params.id;
     if(id){
       
-      res.render("editUser", { id });
+      res.render("./userView/editUser", { id });
     }
     else{
       res.render('errorPage')

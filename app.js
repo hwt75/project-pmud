@@ -20,6 +20,7 @@ app.set('host', host);
 // set up tính năng đọc file ejs
 app.set('views', './view')
 app.set('view engine', 'ejs');
+app.use(express.static('public'))
 
 // set up session
 // app.use(session({
@@ -35,6 +36,11 @@ app.use(bodyParser.json({ type: 'application/json' }));
 // set up router 
 
 app.use('/',router);
+
+// home page
+app.get('/', (req, res) => {
+    res.render('index');
+});
 
 const userController = require('./controllers/userController');
 app.get('/viewUser', userController.viewUser);

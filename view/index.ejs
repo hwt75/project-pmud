@@ -1,0 +1,85 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiển thị thông tin sản phẩm</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <%- include("../layouts/nav"); %>
+    <h1>Danh sách sản phẩm</h1>
+
+    <div class="container">
+        <div class="row cards">
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Lấy dữ liệu sản phẩm
+        const getProducts = async () => {
+            const response = await axios.get("/product/product");
+            return response.data;
+        };
+
+        // Tạo các phần tử thẻ
+        const createCards = (products) => {
+            const cards = products.map((product) => {
+                const card = document.createElement("div");
+                card.classList.add("card", "mb-3", "col-md-3");
+
+                const cardBody = document.createElement("div");
+                cardBody.classList.add("card-body");
+
+                const cardTitle = document.createElement("h5");
+                cardTitle.classList.add("card-title");
+                cardTitle.innerText = product.productName;
+
+                const cardText = document.createElement("p");
+                cardText.classList.add("card-text");
+                cardText.innerHTML = `
+                <strong>Số lượng trong kho:</strong> ${product.numberInStorage}<br>
+                <strong>Công ty sản xuất:</strong> ${product.company}<br>
+                <strong>Giá sản phẩm:</strong> ${product.sellingPrice}<br>
+                <strong>Số lượng đã bán:</strong> ${product.soldCount}<br>
+            `;
+
+                const cardLink = document.createElement("a");
+                cardLink.classList.add("btn", "btn-success");
+                cardLink.href = "#";
+                cardLink.innerText = "Go somewhere";
+
+                cardBody.appendChild(cardTitle);
+                cardBody.appendChild(cardText);
+                cardBody.appendChild(cardLink);
+
+                card.appendChild(cardBody);
+
+                return card;
+            });
+
+            return cards;
+        };
+
+        // Thêm thẻ
+        const appendCards = (cards) => {
+            const cardsContainer = document.querySelector(".cards");
+            cards.forEach((card) => {
+                cardsContainer.appendChild(card);
+            });
+        };
+
+        // Chạy
+        document.addEventListener("DOMContentLoaded", () => {
+            getProducts().then((products) => {
+                const cards = createCards(products);
+                appendCards(cards);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
