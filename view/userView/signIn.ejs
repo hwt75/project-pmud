@@ -15,19 +15,32 @@
                     <h1 class="text-center text-uppercase h3 py-3">Chào mừng quay lại!</h1>
                     <div class="form-group">
                         <label for="fullname">Mã nhân viên</label>
-                        <input type="text" name="name" id="name" class="form-control">
+                        <input type="text" name="name" id="name" class="form-control name-input">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Mật khẩu</label>
-                        <input type="password" name="password" id="password" class="form-control">
+                        <input type="password" name="password" id="password" class="form-control pass-input">
                     </div>
                     <div class="float-end">
-                        <button type="button" class="btn btn-success">Đăng nhập</button>
+                        <button type="button" class="btn btn-success" onclick="handleLogin()">Đăng nhập</button>
                     </div>
                 </form>
 
             </div>
         </div>
     </div>
+    <script>
+        
+        const handleLogin = () => {
+            const nameTag = document.querySelector('.name-input');
+            const passTag = document.querySelector('.pass-input');
+
+            if(nameTag.value == "admin" && passTag.value == "123")
+            {
+                localStorage.setItem('token',"test");
+            window.location.href ="/"
+            }
+        }
+    </script>
 </body>
 </html>
