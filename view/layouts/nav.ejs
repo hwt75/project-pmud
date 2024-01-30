@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <style>
     .navbar-brand {
-      font-family: "Times New Roman", serif;
+      font-family: 'Lucida Handwriting', cursive;
       color: #198754;
     }
     .nav-link {
@@ -18,7 +18,7 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand fs-1" href="#">HUST Store</a>
+      <a class="navbar-brand fs-1" href="">HUST Store</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -31,7 +31,7 @@
             <a class="nav-link active" aria-current="page" href="#">Nhập hàng</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Nhà cung cấp</a>
+            <a class="nav-link active" aria-current="page" href="/user/viewuser">Đối tượng</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="">
@@ -43,10 +43,49 @@
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </ul>
-        <button class="btn btn-outline-success me-2" type="submit">Đăng nhập</button>
-        <button class="btn btn-success" type="submit">Đăng ký</button>
+        
+        <form action="">
+          <div class="text-center mt-3">
+            <button class="btn btn-outline-success me-2" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Đăng nhập</button>
+          </div>
+        </form>
+        <form action="/user/signUp">
+          <div class="text-center mt-3">
+            <button class="btn btn-success" type="submit">Đăng ký</button>
+          </div>
+        </form>
       </div>
     </div>
   </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Chọn vai trò của bạn</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn là chủ hay là nhân viên?</p>
+        </div>
+        <div class="modal-footer">
+          <form action="/admin/login">
+            <div class="text-center mt-3">
+              <button type="submit" class="btn btn-danger">Chủ</button>
+            </div>
+          </form>
+          <form action="/user/signIn">
+            <div class="text-center mt-3">
+              <button type="submit" class="btn btn-success">Nhân viên</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

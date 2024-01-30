@@ -1,5 +1,5 @@
 const UserModel = require("../model/userModel");
-const { upperCase, lowerCase } = require("../utils/processString");
+// const { upperCase, lowerCase } = require("../utils/processString");
 const { v4: uuidv4 } = require('uuid');
 class UserController {
   viewUser(req, res, next) {
@@ -9,10 +9,14 @@ class UserController {
   signUp(req, res, next) {
     res.render("./userView/signUp");
   }
+
+  signIn(req, res, next) {
+    res.render("./userView/signIn");
+  }
   
   editUser(req, res, next) {
     const id = req.params.id;
-    if(id){
+    if(id){ 
       
       res.render("./userView/editUser", { id });
     }
@@ -58,7 +62,7 @@ class UserController {
 
   async getById(req, res, next) {
     var id = req.params.id;
-    console.log();
+    // console.log();
     if(id){
       await UserModel.getById(id)
         .then((data) => {
@@ -125,7 +129,7 @@ class UserController {
       res.json("register successfully");
     })
     .catch((err) => {
-      return res.status(400).json("failed to get user data");
+      return res.status(400).json("SDT ton tai");
     });
    } 
   }

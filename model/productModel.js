@@ -1,4 +1,5 @@
 const CommonModel = require("./commonModel");
+const { formatterPrice } = require("../utils/processString");
 
 class ProductModel extends CommonModel {
   async getAllData() {
@@ -25,7 +26,10 @@ class ProductModel extends CommonModel {
     );
   }
 
-  updateProduct(productId, product) {
+  updateProduct(productId, product) { 
+    // Định dạng lại price 
+    const formatterSellingPrice = formatPrice(product.sellingPrice);
+
     // Sử dụng truy vấn được tham số hóa
     const query = `UPDATE product SET productName = '${product.productName}', 
                                         productAddress = '${product.productAddress}', 

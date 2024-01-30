@@ -3,13 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiển thị thông tin sản phẩm</title>
+    <title>Trang chủ</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+        .jumbotron {
+            background-color: #f8f9fa;
+            padding: 2rem 1rem;
+        }
+
+        .jumbotron h1 {
+            display: inline-block;
+            font-family: 'Lucida Handwriting', cursive;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #198754;
+        }
+
+        .jumbotron h2 {
+            display: inline-block;
+            font-family: 'Arial', sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #39181c;
+            margin-left: 5px;
+        }
+
+        .jumbotron p {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.5rem;
+            color: #6c757d;
+        }
+
+        .mr{
+            margin-right: 10px;
+        }
+
+        .card {
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(25, 135, 84, 1.0);
+        }
+    </style>
 </head>
 
 <body>
-    <%- include("../layouts/nav"); %>
-    <h1>Danh sách sản phẩm</h1>
+    <%- include('./layouts/nav'); %>
+    <div class="jumbotron">
+        <div class="container text-center">
+            <h1 class="display-4">HUST Store  <h2 class="ml-4 d-inline-block">xin chào</h2> </h1>
+            <hr class="my-4">
+            <p class="lead text-center">Chúc bạn ngày mới năng động!</p>
+        </div>
+    </div>
 
     <div class="container">
         <div class="row cards">
@@ -17,6 +72,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/utils/processString.js"></script>
     <script>
         // Lấy dữ liệu sản phẩm
         const getProducts = async () => {
@@ -27,11 +83,18 @@
         // Tạo các phần tử thẻ
         const createCards = (products) => {
             const cards = products.map((product) => {
+                // const formattedPrice = formatterPrice(product.sellingPrice);
+
                 const card = document.createElement("div");
-                card.classList.add("card", "mb-3", "col-md-3");
+                card.classList.add("card", "mb-3", "col-md-3", "mr");
 
                 const cardBody = document.createElement("div");
                 cardBody.classList.add("card-body");
+
+                const cardImage = document.createElement("img");
+                cardImage.classList.add("card-img-top");
+                cardImage.src = product.image;
+                cardImage.alt = "";
 
                 const cardTitle = document.createElement("h5");
                 cardTitle.classList.add("card-title");
@@ -40,19 +103,26 @@
                 const cardText = document.createElement("p");
                 cardText.classList.add("card-text");
                 cardText.innerHTML = `
-                <strong>Số lượng trong kho:</strong> ${product.numberInStorage}<br>
+                <strong>Số lượng trong kho:</strong> ${product.numberInStorage} ${product.unit}<br>
                 <strong>Công ty sản xuất:</strong> ${product.company}<br>
                 <strong>Giá sản phẩm:</strong> ${product.sellingPrice}<br>
-                <strong>Số lượng đã bán:</strong> ${product.soldCount}<br>
-            `;
+                <strong>Số lượng đã bán:</strong> ${product.soldCount}<br>`;
 
-                const cardLink = document.createElement("a");
-                cardLink.classList.add("btn", "btn-success");
+                const cardPrice = document.createElement("div");
+                cardPrice.classList.add("btn", "float-start", "btn-danger");
+                cardPrice.href = "#";
+                cardPrice.innerText = `${product.sellingPrice}`.toLocaleString("vi-VN") + " VND";
+
+                
+                const cardLink = document.createElement("div");
+                cardLink.classList.add("btn", "btn-success", "float-end");
                 cardLink.href = "#";
                 cardLink.innerText = "Go somewhere";
 
+                cardBody.appendChild(cardImage);
                 cardBody.appendChild(cardTitle);
                 cardBody.appendChild(cardText);
+                cardBody.appendChild(cardPrice);
                 cardBody.appendChild(cardLink);
 
                 card.appendChild(cardBody);

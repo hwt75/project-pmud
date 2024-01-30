@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/user', UserController.getAll)
 router.get('/viewUser', UserController.viewUser)
 router.get('/signUp', UserController.signUp)
+router.get('/signIn', UserController.signIn)
 router.get('/editUser/:id', UserController.editUser)
 
 router.get('/getByPhoneNumber/:phoneNumber', UserController.getByPhoneNumber)
@@ -19,4 +20,4 @@ router.post('/post', UserController.postNewUser)
 router.post('/update', UserController.update)
 router.put('/edit/:phoneNumber', UserController.updateUser)
 
-module.exports = router
+module.exports = router;
