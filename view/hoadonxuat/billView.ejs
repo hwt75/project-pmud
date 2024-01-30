@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa đơn</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="invoice">
+        <div class="header">
+            <h2>CỬA HÀNG NÔNG SẢN</h2>
+        </div>
+
+        <div class="content">
+            <div class="customer-info">
+                <p><strong>Thời gian:</strong> <span class="current-time"></span>,
+                    <span class="current-date"></span></p>
+                <p><strong>Mã số hóa đơn:</strong> HD001</p>
+                <p><strong>Tên khách hàng:</strong> John Doe</p>
+                <p><strong>Mã số khách hàng:</strong> C001</p>
+            </div>
+
+            <div class="products">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng cộng</th>
+                        </tr>
+                    </thead>
+                    <tbody class="product-list">
+                        <!-- Sản phẩm sẽ được thêm vào đây -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="total">
+                <h3>Tổng cộng: <span class="total-amount"></span></h3>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy thời gian và ngày hiện tại
+        var currentDate = new Date();
+
+        // Định dạng ngày tháng
+        var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        var formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+        // Định dạng giờ phút giây
+        var formattedTime = currentDate.toLocaleTimeString('en-US');
+
+        // Gán giá trị vào các phần tử HTML tương ứng
+        window.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('.current-time').innerText = formattedTime;
+            document.querySelector('.current-date').innerText = formattedDate;
+
+            var productList = document.querySelector('.product-list');
+            var totalAmount = document.querySelector('.total-amount');
+
+            var products = [
+                { name: 'Sản phẩm 1', price: '100,000 VND', quantity: 2, total: '200,000 VND' },
+                { name: 'Sản phẩm 2', price: '150,000 VND', quantity: 1, total: '150,000 VND' }
+            ];
+
+            products.forEach(function (product) {
+                var row = document.createElement('tr');
+
+                var nameCell = document.createElement('td');
+                nameCell.innerText = product.name;
+                row.appendChild(nameCell);
+
+                var priceCell = document.createElement('td');
+                priceCell.innerText = product.price;
+                row.appendChild(priceCell);
+
+                var quantityCell = document.createElement('td');
+                quantityCell.innerText = product.quantity;
+                row.appendChild(quantityCell);
+
+                var totalCell = document.createElement('td');
+                totalCell.innerText = product.total;
+                row.appendChild(totalCell);
+
+                productList.appendChild(row);
+            });
+
+            // Tính tổng cộng
+            var total = products.reduce(function (acc, product) {
+                return acc + parseFloat(product.total.replace(',', '').replace(' VND', ''));
+            }, 0);
+
+            totalAmount.innerText = total.toFixed(0) + ' VND';
+        });
+    </script>
+</body>
+
+</html>

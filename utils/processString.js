@@ -7,4 +7,8 @@ const lowerCase = (name) => {
     return name.charAt(0).toLowerCase() + str.slice(2);
 }
 
-module.exports = {upperCase, lowerCase};
+const formatterPrice = (price) => {
+    return price.toLocaleString("vi-VN") + " VND";
+}
+
+module.exports = {upperCase, lowerCase, formatterPrice};

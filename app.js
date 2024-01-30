@@ -42,9 +42,9 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-const userController = require('./controllers/userController');
-app.get('/viewUser', userController.viewUser);
-app.get('/signUp', userController.signUp)
+// const userController = require('./controllers/userController');
+// app.get('/viewUser', userController.viewUser);
+// app.get('/signUp', userController.signUp)
 
 // phần này để test xem chạy đc hay ko 
 
