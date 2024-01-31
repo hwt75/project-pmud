@@ -1,0 +1,151 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .jumbotron {
+            background-color: #f8f9fa;
+            padding: 2rem 1rem;
+        }
+
+        .jumbotron h1 {
+            display: inline-block;
+            font-family: 'Lucida Handwriting', cursive;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #198754;
+        }
+
+        .jumbotron h2 {
+            display: inline-block;
+            font-family: 'Arial', sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #39181c;
+            margin-left: 5px;
+        }
+
+        .jumbotron p {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.5rem;
+            color: #6c757d;
+        }
+
+        .mr {
+            margin-right: 10px;
+        }
+
+        .card {
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(25, 135, 84, 1.0);
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../layouts/nav'); %>
+        <div class="container py-5">
+            <div class="container">
+                <form action="" class="row product-form">
+                    <div class="col-md-4">
+                        <img src="" alt="Image" class="img-fluid">
+                    </div>
+                    <div class="col-md-8 row">
+                        <h2>Tên sản phẩm</h2>
+                        <div class="col-md-6">
+                            <div id="productId">Mã sản phẩm:</div>
+                            <div id="productName">Tên: </div>
+                            <div id="productAddress">Địa chỉ: </div>
+                            <div id="unit">Đơn vị: </div>
+                            <div id="numberInStorage">Số lượng trong kho: </div>
+                            <div class="float-end py-5">
+                                <button type="button" class="btn btn-danger">Chỉnh sửa</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="company">Công ty: </div>
+                            <div id="purchasePrice">Giá nhập: </div>
+                            <div id="sellingPrice">Giá bán: </div>
+                            <div id="soldCount">Số lượng đã bán: </div>
+                            <div id="productTypeId">Mã loại sản phẩm: </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        <% productId %>
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const productForm = document.querySelector(".product-form");
+
+                    if (productForm) {
+                        var productIdd = "<%- productId %>";
+                        console.log(productIdd);
+
+                        productForm.addEventListener("submit", function (event) {
+                            event.preventDefault();
+                        });
+
+
+                        document.addEventListener("DOMContentLoaded", () => {
+                            const productId = document.getElementById("productId");
+                            const productName = document.getElementById("productName");
+                            const productAddress = document.getElementById("productAddress");
+                            const unit = document.getElementById("unit");
+                            const numberInStorage = document.getElementById("numberInStorage");
+                            const company = document.getElementById("company");
+                            const purchasePrice = document.getElementById("purchasePrice");
+                            const sellingPrice = document.getElementById("sellingPrice");
+                            const soldCount = document.getElementById("soldCount");
+                            const productTypeId = document.getElementById("productTypeId");
+                            fetch(`http://localhost:3000/product/getProductById/${productIdd}`)
+                                .then((response) => {
+                                    const productData = response.data; // Use response.data directly for HTML content
+                                    console.log(response);
+
+                                    if (productData) {
+                                        // Cập nhật DOM với dữ liệu được trích xuất
+                                        document.getElementById("productId").innerText = `Mã sản phẩm: ${productData.productId ?? ""}`;
+                                        document.getElementById("productName").innerText = `Tên: ${productData.productName ?? ""}`;
+                                        document.getElementById("productAddress").innerText = `Địa chỉ: ${productData.productAddress ?? ""}`;
+                                        document.getElementById("unit").innerText = `Đơn vị: ${productData.unit ?? ""}`;
+                                        document.getElementById("numberInStorage").innerText = `Số lượng trong kho: ${productData.numberInStorage ?? ""}`;
+                                        document.getElementById("company").innerText = `Công ty: ${productData.company ?? ""}`;
+                                        document.getElementById("purchasePrice").innerText = `Giá nhập: ${productData.purchasePrice ?? ""}`;
+                                        document.getElementById("sellingPrice").innerText = `Giá bán: ${productData.sellingPrice ?? ""}`;
+                                        document.getElementById("soldCount").innerText = `Số lượng đã bán: ${productData.soldCount ?? ""}`;
+                                        document.getElementById("productTypeId").innerText = `Mã loại sản phẩm: ${productData.productTypeId ?? ""}`;
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error('Lỗi khi truy xuất dữ liệu sản phẩm:', error);
+                                });
+                        });
+
+                    } else {
+                        window.location.href = "/error";
+                    }
+                });
+            </script>
+
+
+</body>
+
+</html>

@@ -4,9 +4,11 @@ const productController = require('../controllers/productController');
 
 const router = express.Router();
 
+router.get('/productView', productController.product)
+
 router.get('/product', productController.getAllData)
 
-router.get('/getProductById/:id', productController.getById)
+router.get('/getProductById/:productId', productController.getById)
 router.get('/getProductByName/:productName', productController.getByName)
 
 router.delete('/deleteProductById/:id', productController.deleteById)

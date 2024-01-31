@@ -1,5 +1,9 @@
 const ProductModel = require('../model/productModel')
 class ProductController {
+    product(req, res, next) {
+      res.render("./productView/product")
+    }
+
     async getAllData(req, res, next) {
         await ProductModel.getAllData()
         .then((data) => {
@@ -11,14 +15,14 @@ class ProductController {
     }
 
     async getById(req, res, next) {
-        var id = req.params.id;
-        await ProductModel.getById(id)
+        var productId = req.params.productId;
+        await ProductModel.getById(productId)
           .then((data) => {
-            res.json(data);
+            // res.json(data);
+            res.render("./productView/product", { productId });
           })
           .catch((err) => {
-            console.log(err);
-            return res.status(400).json("failed to get product data");
+            res.render('errorPage')
           });
     }
 
@@ -98,7 +102,16 @@ class ProductController {
       }
     }
     
-
+    showProduct(req, res, next) {
+      const productId = req.params.productId;
+      if(productId){ 
+        
+        res.render("./productView/product", { productId });
+      }
+      else{
+        res.render('errorPage')
+      }
+    }
 }
 
 module.exports = new ProductController();

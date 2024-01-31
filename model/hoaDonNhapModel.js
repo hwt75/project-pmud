@@ -1,1 +1,7 @@
-// const CommonModel = require("./commonModel");
+const CommonModel = require("./commonModel");
+
+class HoaDonNhapModel extends CommonModel {
+    
+};
+
+module.exports = new HoaDonNhapModel();

@@ -19,6 +19,11 @@ class UserModel extends CommonModel {
       `DELETE FROM nguoi_dung WHERE phoneNumber = '${phoneNumber}'`
     );
   }
+  async deleteById(id) {
+    return await this.executeQuery(
+      `DELETE FROM nguoi_dung WHERE id = '${id}'`
+    );
+  }
   async deleteByName(name) {
     return await this.executeQuery(
       `DELETE FROM nguoi_dung WHERE name = '${name}'`

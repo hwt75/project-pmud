@@ -49,7 +49,8 @@
                                 <th>Số điện thoại</th>
                                 <th>Email</th>
                                 <th>Địa chỉ</th>
-                                <th>Sửa/Xóa</th>
+                                <th>Sửa</th>
+                                <th>Xóa</th>
                             </tr>
                         </thead>
                         <tbody id="userTableBody">
@@ -71,7 +72,7 @@
 
         // Xử lý sự kiện khi người dùng nhấn nút tìm kiếm
         searchForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Ngăn chặn việc gửi yêu cầu form
+            event.preventDefault(); // Ngăn chặn việc gửi form
 
             const searchNameTerm = searchNameInput.value.trim(); // Lấy giá trị tìm kiếm và loại bỏ khoảng trắng thừa
             const searchPhoneNumberTerm = searchPhoneNumberInput.value.trim();
@@ -96,7 +97,7 @@
                             <td>
                                 <form action="/user/editUser/${user.id}">
                                         <button class="btn btn-outline-primary btn-sm edit-button" type ="submit">Sửa</button>
-                                         <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
+                                        <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
                                 </form>
                             </td>
                         `;
@@ -159,10 +160,14 @@
                     <td>${user.address}</td>
                     <td>
                         <form action="/user/editUser/${user.id}">
-                                        <button class="btn btn-outline-primary btn-sm edit-button" type ="submit">Sửa</button>
-                                         <button class="btn btn-outline-danger btn-sm delete-button">Xóa</button>
-                        </form>
+                            <button class="btn btn-outline-primary btn-sm edit-button" type ="submit">Sửa</button>
+                        </form>   
                     </td>
+                    <td>    
+                        <form action="/user/delete/${user.id}">
+                            <button class="btn btn-outline-danger btn-sm edit-button" type ="submit">Xóa</button>
+                        </form> 
+                    </td>    
                 `;
                         userTableBody.appendChild(row);
                     });
@@ -172,19 +177,7 @@
                 });
         });
 
-        editButton.addEventListener('click', () => {
-            // Thực hiện hành động sửa người dùng tương ứng với hàng được nhấn
-            console.log('Sửa người dùng với ID:', user.id);
-        });
 
-        // Đăng ký sự kiện click cho nút "Xóa"
-        deleteButton.addEventListener('click', () => {
-            // Thực hiện hành động xóa người dùng tương ứng với hàng được nhấn
-            console.log('Xóa người dùng với ID:', user.id);
-        });
-        const editUser = (id) => {
-            fetch('/user')
-        }
     </script>
 </body>
 

@@ -23,7 +23,6 @@ class UserController {
     else{
       res.render('errorPage')
     }
-    
   }
   
   async getAll(req, res, next) {
@@ -99,6 +98,29 @@ class UserController {
     }
   }
 
+  async deleteById(req, res, next) {
+    var id = req.params.id;
+    // var name = upperCase(id)
+    // console.log(id);
+    if (id) {
+      await UserModel.getById(id)
+        .then(async (data) => {
+          await UserModel.deleteById(id)
+            .then((data) => {
+              // res.json(data);
+              res.render("./userView/viewUser");
+            })
+            .catch((err) => {
+              res.status(400).json("delete failed");
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(400).json("failed to get user data");
+        });
+    }
+  }
+
   async deleteByName(req, res, next) {
     var name = req.params.name;
     if (name) {
@@ -126,7 +148,8 @@ class UserController {
     user.id = uuidv4();
     await UserModel.postNewUser(user)
     .then(() => {
-      res.json("register successfully");
+      // res.json("register successfully");
+      res.render("./userView/success")
     })
     .catch((err) => {
       return res.status(400).json("SDT ton tai");

@@ -8,15 +8,19 @@ router.get('/user', UserController.getAll)
 router.get('/viewUser', UserController.viewUser)
 router.get('/signUp', UserController.signUp)
 router.get('/signIn', UserController.signIn)
+
 router.get('/editUser/:id', UserController.editUser)
+router.get('/delete/:id', UserController.deleteById)
 
 router.get('/getByPhoneNumber/:phoneNumber', UserController.getByPhoneNumber)
 router.get('/getByName/:name', UserController.getByName)
 router.get('/getById/:id', UserController.getById)
+
 router.delete('/delete/:phoneNumber', UserController.deleteByPhoneNumber)
 router.delete('/delete/:name', UserController.deleteByName)
 
 router.post('/post', UserController.postNewUser)
+
 router.post('/update', UserController.update)
 router.put('/edit/:phoneNumber', UserController.updateUser)
 

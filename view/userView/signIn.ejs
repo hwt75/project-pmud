@@ -14,7 +14,7 @@
                 <form action="" class="col-md-4 offset-md-4 bg-light p-3 my-3 border border-success-subtle rounded-4 shadow-lg">
                     <h1 class="text-center text-uppercase h3 py-3">Chào mừng quay lại!</h1>
                     <div class="form-group">
-                        <label for="fullname">Mã nhân viên</label>
+                        <label for="fullname">Mã người dùng</label>
                         <input type="text" name="name" id="name" class="form-control name-input">
                     </div>
                     <div class="form-group mb-3">
@@ -32,15 +32,34 @@
     <script>
         
         const handleLogin = () => {
-            const nameTag = document.querySelector('.name-input');
-            const passTag = document.querySelector('.pass-input');
+    const nameTag = document.querySelector('.name-input');
+    const passTag = document.querySelector('.pass-input');
 
-            if(nameTag.value == "admin" && passTag.value == "123")
-            {
-                localStorage.setItem('token',"test");
-            window.location.href ="/"
+    const id = nameTag.value; // Lấy giá trị id từ input
+
+    fetch(`/user/getById/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Lỗi khi lấy danh sách người dùng'); // Xử lý lỗi mạng
             }
-        }
+            return response.json(); // Parse JSON response
+        })
+        .then(data => {
+            const user = data[0];
+            if (user && user.password === passTag.value) { // Kiểm tra mật khẩu
+                console.log(user.password);
+                localStorage.setItem('token', 'test'); // Lưu token
+                window.location.href = '/'; // Chuyển hướng
+            } 
+            else {
+                alert('Mã nhân viên hoặc mật khẩu không đúng'); // Xử lý trường hợp mật khẩu sai hoặc không tìm thấy người dùng
+            }
+        })
+        .catch(error => {
+            console.error('Lỗi khi lấy danh sách người dùng:', error); // Xử lý lỗi
+            alert('Có lỗi xảy ra, vui lòng thử lại'); // Hiển thị thông báo lỗi chung
+        });
+}
     </script>
 </body>
 </html>

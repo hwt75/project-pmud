@@ -1,7 +1,9 @@
-// const express = require('express');
+const express = require('express');
 
-// const HoaDonNhapController = require('../controllers/hoaDonNhapController');
+const HoaDonNhapController = require('../controllers/hoaDonNhapController');
 
-// const router = express();
+const router = express.Router();
 
-// module.exports = router;
+router.get('/receiveView', HoaDonNhapController.receiveView);
+
+module.exports = router;

@@ -1,7 +1,10 @@
-// const HoaDonNhapModel = require('../model/hoaDonNhapModel');
+const HoaDonNhapModel = require('../model/hoaDonNhapModel');
 
-// class HoaDonNhapController{
+class HoaDonNhapController{
+    receiveView(req, res, next){
+        res.render("./hoaDonNhap/receiveView")
+    }
 
-// }
+};
 
-// module.exports = new HoaDonNhapController();
+module.exports = new HoaDonNhapController();

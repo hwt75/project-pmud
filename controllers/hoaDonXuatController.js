@@ -1,8 +1,8 @@
 const HoaDonXuatModel = require('../model/hoaDonXuatModel');
 
 class HoaDonXuatController{
-    billView(req, res, next){
-        res.render("./hoadonxuat/billView")
+    sellView(req, res, next){
+        res.render("./hoaDonXuat/sellView")
     }
 
     async getAll(req, res, next) {
