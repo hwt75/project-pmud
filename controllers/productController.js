@@ -14,13 +14,28 @@ class ProductController {
         })
     }
 
+    productDetails(req, res, next) {
+      const productId = req.params.productId;
+      if(productId){ 
+        // res.json(data);
+        res.render("./productView/product", { productId });
+      }
+      else{
+        res.render('errorPage')
+      }
+    }
+
     async getById(req, res, next) {
         var productId = req.params.productId;
         await ProductModel.getById(productId)
           .then((data) => {
-            // res.json(data);
-            res.render("./productView/product", { productId });
+            res.json(data);
           })
+          // .then((productId) => {
+          //   res.render("./productView/product", { productId });
+          //   const productData =  ProductModel.getById(productId);
+          //   res.json(productData);
+          // })
           .catch((err) => {
             res.render('errorPage')
           });

@@ -63,7 +63,7 @@
             <div class="container">
                 <form action="" class="row product-form">
                     <div class="col-md-4">
-                        <img src="" alt="Image" class="img-fluid">
+                        <img src="" alt="Image" class="img-fluid" id="productImage">
                     </div>
                     <div class="col-md-8 row">
                         <h2>Tên sản phẩm</h2>
@@ -104,40 +104,34 @@
                         });
 
 
-                        document.addEventListener("DOMContentLoaded", () => {
-                            const productId = document.getElementById("productId");
-                            const productName = document.getElementById("productName");
-                            const productAddress = document.getElementById("productAddress");
-                            const unit = document.getElementById("unit");
-                            const numberInStorage = document.getElementById("numberInStorage");
-                            const company = document.getElementById("company");
-                            const purchasePrice = document.getElementById("purchasePrice");
-                            const sellingPrice = document.getElementById("sellingPrice");
-                            const soldCount = document.getElementById("soldCount");
-                            const productTypeId = document.getElementById("productTypeId");
-                            fetch(`http://localhost:3000/product/getProductById/${productIdd}`)
+                       
+                        fetch(`http://localhost:3000/product/getProductById/${productIdd}`)
                                 .then((response) => {
-                                    const productData = response.data; // Use response.data directly for HTML content
-                                    console.log(response);
-
-                                    if (productData) {
+                                    return response.json();
+                                })
+                                .then((productData) => {        
+                                    var product = productData[0];
+                                    console.log(product);
+                                    if (product) {
                                         // Cập nhật DOM với dữ liệu được trích xuất
-                                        document.getElementById("productId").innerText = `Mã sản phẩm: ${productData.productId ?? ""}`;
-                                        document.getElementById("productName").innerText = `Tên: ${productData.productName ?? ""}`;
-                                        document.getElementById("productAddress").innerText = `Địa chỉ: ${productData.productAddress ?? ""}`;
-                                        document.getElementById("unit").innerText = `Đơn vị: ${productData.unit ?? ""}`;
-                                        document.getElementById("numberInStorage").innerText = `Số lượng trong kho: ${productData.numberInStorage ?? ""}`;
-                                        document.getElementById("company").innerText = `Công ty: ${productData.company ?? ""}`;
-                                        document.getElementById("purchasePrice").innerText = `Giá nhập: ${productData.purchasePrice ?? ""}`;
-                                        document.getElementById("sellingPrice").innerText = `Giá bán: ${productData.sellingPrice ?? ""}`;
-                                        document.getElementById("soldCount").innerText = `Số lượng đã bán: ${productData.soldCount ?? ""}`;
-                                        document.getElementById("productTypeId").innerText = `Mã loại sản phẩm: ${productData.productTypeId ?? ""}`;
+                                        document.getElementById("productImage").src = product.image;
+                                        console.log("../" + product.image);
+                                        document.getElementById("productId").innerText = `Mã sản phẩm: ${product.productId ?? ""}`;
+                                        document.getElementById("productName").innerText = `Tên: ${product.productName ?? ""}`;
+                                        document.getElementById("productAddress").innerText = `Địa chỉ: ${product.productAddress ?? ""}`;
+                                        document.getElementById("unit").innerText = `Đơn vị: ${product.unit ?? ""}`;
+                                        document.getElementById("numberInStorage").innerText = `Số lượng trong kho: ${product.numberInStorage ?? ""}`;
+                                        document.getElementById("company").innerText = `Công ty: ${product.company ?? ""}`;
+                                        document.getElementById("purchasePrice").innerText = `Giá nhập: ${product.purchasePrice ?? ""}`;
+                                        document.getElementById("sellingPrice").innerText = `Giá bán: ${product.sellingPrice ?? ""}`;
+                                        document.getElementById("soldCount").innerText = `Số lượng đã bán: ${product.soldCount ?? ""}`;
+                                        document.getElementById("productTypeId").innerText = `Mã loại sản phẩm: ${product.productTypeId ?? ""}`;
                                     }
                                 })
                                 .catch((error) => {
                                     console.error('Lỗi khi truy xuất dữ liệu sản phẩm:', error);
                                 });
-                        });
+                        
 
                     } else {
                         window.location.href = "/error";

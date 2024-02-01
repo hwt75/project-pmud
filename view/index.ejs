@@ -107,37 +107,39 @@
                 <strong>Giá sản phẩm:</strong> ${product.sellingPrice}<br>
                 <strong>Số lượng đã bán:</strong> ${product.soldCount}<br>`;
 
-                const cardPrice = document.createElement("div");
+                const cardPrice = document.createElement("button");
                 cardPrice.classList.add("btn", "float-start", "btn-danger");
                 cardPrice.href = "/productView/product";
                 cardPrice.innerText = `${product.sellingPrice}`.toLocaleString("vi-VN") + " VND";
                 cardPrice.addEventListener("click", function() {
-                    window.location.href = "/product/productView";
+                    // window.location.href = "/product/productView";
                 });
 
                 const productId = `${product.productId}`;
                 console.log(productId);
 
                 const cardAction = document.createElement("form")
-                cardAction.classList.add("float-end");
-                cardAction.action = "/product/getProductById/" + product.productId;
+                // cardAction.classList.add("float-end");
+                cardAction.action = "/product/productDetail/" + product.productId;
 
                 const cardLink = document.createElement("button");
                 cardLink.classList.add("btn", "btn-success", "float-end");
                 // cardLink.type = "submit";
-                cardLink.href = "/productView/product";
+                // cardLink.href = "/productView/product";
                 cardLink.innerText = "Xem hàng";
                 cardLink.addEventListener("click", function() {
                     // window.location.href = "/product/productView";
                     // console.log(product.productId);
                 });
 
-                cardAction.appendChild(cardLink)
+                cardAction.appendChild(cardLink);
+                cardAction.appendChild(cardPrice);
+
 
                 cardBody.appendChild(cardImage);
                 cardBody.appendChild(cardTitle);
                 cardBody.appendChild(cardText);
-                cardBody.appendChild(cardPrice);
+                // cardBody.appendChild(cardPrice);
                 cardBody.appendChild(cardAction);
                 // cardBody.appendChild(cardLink);
 

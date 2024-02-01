@@ -17,7 +17,7 @@ class UserController {
   editUser(req, res, next) {
     const id = req.params.id;
     if(id){ 
-      
+      // res.json(data);
       res.render("./userView/editUser", { id });
     }
     else{
@@ -42,7 +42,8 @@ class UserController {
         res.json(data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
+        res.json(err);
         return res.status(400).json("failed to get user data");
       });
   }
