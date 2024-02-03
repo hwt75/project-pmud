@@ -1,0 +1,54 @@
+<style>
+  .navbar-brand {
+    font-family: 'Lucida Handwriting', cursive;
+    color: #198754;
+  }
+</style>
+
+<div class="position-fixed bottom-0 end-0 p-3">
+  <div class="d-flex flex-row-reverse">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <h1 class="navbar-toggler-icon text-bg-success rounded-4 shadow-lg">?
+      </h1>
+    </button>
+  </div>
+</div>
+
+<div class="container-fluid">
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title navbar-brand" id="offcanvasNavbarLabel">HUST STORE</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/viewuser">Đối tượng</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Thống kê
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Đơn xuất</a></li>
+            <li><a class="dropdown-item" href="#">Đơn nhập</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Thống kê khác</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex mt-3" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</div>
+</nav>

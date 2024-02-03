@@ -7,12 +7,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
 <body>
   <div class="wrapper">
     <div class="container">
       <div class="row justify-content-around">
-        <form action="/user/post" class="col-md-4 bg-light p-3 my-3 border border-success-subtle rounded-4 shadow-lg" method="post">
+        <form action="/user/post" class="col-md-4 bg-light p-3 my-3 border border-success-subtle rounded-4 shadow-lg" method="post" onsubmit="return validateForm()">
           <h1 class="text-center text-uppercase h3 py-3">Đăng ký tài khoản <br>nhân viên</h1>
           <div class="form-group">
             <label for="fullname">Họ và tên</label>
@@ -44,12 +43,30 @@
           </div>
           <div class="float-end">
             <button type="submit" class="btn btn-success">Đăng ký</button>
-            <button type="button" class="btn btn-secondary">Hủy</button>
+            <button type="button" onclick="cancelRegistration()" class="btn btn-secondary">Hủy</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-</body>
 
+  <script>
+    const validateForm = () => {
+      // Lấy giá trị của các trường input
+      var name = document.getElementById("name").value;
+      var birth = document.getElementById("birth").value;
+      var phoneNumber = document.getElementById("phoneNumber").value;
+
+      // Kiểm tra nếu một số trường không được điền
+      if (name === "" || birth === "" || phoneNumber === "") {
+        alert("Vui lòng điền đầy đủ Tên + SDT + ngày sinh");
+        return false; // Ngăn form được gửi đi
+      }
+    }
+
+    const cancelRegistration = () => {
+      window.location.href = "/";
+    }
+  </script>
+</body>
 </html>

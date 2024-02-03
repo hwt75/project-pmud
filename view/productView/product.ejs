@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico">
     <style>
         .card {
             margin-bottom: 20px;
@@ -60,15 +61,15 @@
 <body>
     <%- include('../layouts/nav'); %>
         <div class="container py-5">
-            <div class="container">
+            <div class="container col-md-12 bg-light p-3 my-3 border border-success-subtle rounded-4 shadow-lg">
                 <form action="" class="row product-form">
                     <div class="col-md-4">
                         <img src="" alt="Image" class="img-fluid" id="productImage">
                     </div>
                     <div class="col-md-8 row">
-                        <h2>Tên sản phẩm</h2>
+                        <h2 id ="tag">Tên sản phẩm</h2>
                         <div class="col-md-6">
-                            <div id="productId">Mã sản phẩm:</div>
+                            <div id="productId">Mã sản phẩm: </div>
                             <div id="productName">Tên: </div>
                             <div id="productAddress">Địa chỉ: </div>
                             <div id="unit">Đơn vị: </div>
@@ -114,7 +115,9 @@
                                     console.log(product);
                                     if (product) {
                                         // Cập nhật DOM với dữ liệu được trích xuất
-                                        document.getElementById("productImage").src = product.image;
+                                        // Em mở màn hình bên kia ok anh hehe
+                                        document.getElementById("tag").innerText = `${product.productName ?? ""}`;
+                                        document.getElementById("productImage").src = "/" + product.image;
                                         console.log("../" + product.image);
                                         document.getElementById("productId").innerText = `Mã sản phẩm: ${product.productId ?? ""}`;
                                         document.getElementById("productName").innerText = `Tên: ${product.productName ?? ""}`;
