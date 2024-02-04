@@ -2,9 +2,22 @@ const CommonModel = require("./commonModel");
 const { formatterPrice } = require("../utils/processString");
 
 class ProductModel extends CommonModel {
+
   async getAllData() {
     return await this.executeQuery("SELECT * FROM product");
   }
+
+  // async getAllData() {
+  //   const products = await this.executeQuery("SELECT * FROM product");
+  //   return products.map((product) => ({
+  //     productId: product.productId,
+  //     productName: product.productName,
+  //     productUnit: product.productUnit,
+  //     purchasePrice: product.purchasePrice,
+  //     sellingPrice: product.sellingPrice
+  //   })); 
+  // }
+  
   async getById(productId) {
     return await this.executeQuery(
       `SELECT * FROM product WHERE productId = '${productId}'`

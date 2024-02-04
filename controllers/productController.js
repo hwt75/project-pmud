@@ -8,6 +8,7 @@ class ProductController {
         await ProductModel.getAllData()
         .then((data) => {
             res.json(data);
+            console.log(data);
         })
         .catch((err) => {
             res.json(err);

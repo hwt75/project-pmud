@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico">
     <style>
         .card {
             margin-bottom: 20px;
@@ -58,6 +59,8 @@
 
 <body>
     <%- include('./layouts/nav'); %>
+    <%- include('./layouts/darkNav'); %>
+    
     <div class="jumbotron">
         <div class="container text-center">
             <h1 class="display-4">HUST Store  <h2 class="ml-4 d-inline-block">xin chào</h2> </h1>
@@ -70,6 +73,8 @@
         <div class="row cards">
         </div>
     </div>
+
+    <%- include('./layouts/footer'); %>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -94,6 +99,7 @@
                 cardImage.classList.add("card-img-top");
                 cardImage.src = product.image;
                 cardImage.alt = "";
+                console.log(cardImage.src);
 
                 const cardTitle = document.createElement("h5");
                 cardTitle.classList.add("card-title");
@@ -104,13 +110,13 @@
                 cardText.innerHTML = `
                 <strong>Số lượng trong kho:</strong> ${product.numberInStorage} ${product.unit}<br>
                 <strong>Công ty sản xuất:</strong> ${product.company}<br>
-                <strong>Giá sản phẩm:</strong> ${product.sellingPrice}<br>
+                <strong>Giá sản phẩm:</strong> ${product.sellingPrice.toFixed(3)}<br>
                 <strong>Số lượng đã bán:</strong> ${product.soldCount}<br>`;
 
                 const cardPrice = document.createElement("button");
-                cardPrice.classList.add("btn", "float-start", "btn-danger");
+                cardPrice.classList.add("btn", "float-start", "btn-danger", "mb-1");
                 cardPrice.href = "/productView/product";
-                cardPrice.innerText = `${product.sellingPrice}`.toLocaleString("vi-VN") + " VND";
+                cardPrice.innerText = `${product.sellingPrice}`.toLocaleString("vi-VN") +".000" + " VND";
                 cardPrice.addEventListener("click", function() {
                     // window.location.href = "/product/productView";
                 });
@@ -123,7 +129,7 @@
                 cardAction.action = "/product/productDetail/" + product.productId;
 
                 const cardLink = document.createElement("button");
-                cardLink.classList.add("btn", "btn-success", "float-end");
+                cardLink.classList.add("btn", "btn-success", "float-end", "mb-1");
                 // cardLink.type = "submit";
                 // cardLink.href = "/productView/product";
                 cardLink.innerText = "Xem hàng";

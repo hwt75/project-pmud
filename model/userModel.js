@@ -81,5 +81,6 @@ class UserModel extends CommonModel {
     address = '${user.address}', 
     password = '${user.password}' WHERE id = '${user.id}'`);
   }
+  
 }
 module.exports = new UserModel();

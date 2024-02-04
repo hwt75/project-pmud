@@ -1,4 +1,4 @@
-const knex = require('knex');
+const knex = require('knex'); //thư viện knex
 
 const connection = {
     client: 'mysql',
@@ -12,6 +12,5 @@ const connection = {
         connectionLimit: 10,
     }
 }
-
 
 module.exports = knex(connection);

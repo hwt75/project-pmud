@@ -1,86 +1,246 @@
-</html><!DOCTYPE html>
+</html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giao diện nhập hàng</title>
+    <title>Giao diện bán hàng</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 
 <body>
     <%- include('../layouts/nav'); %>
-    <div class="wrapper">
-        <div class="container">
-          <div class="row justify-content-around">
-            <form action="" class="col-md-12 bg-light p-3 my-3 border border-success-subtle rounded-4 shadow-lg" method="">
-                <div class="row mt-3">
-                    <div class="col">
-                        <h2>Cồ Dũng</h2>
-                    </div>
-                    <div class="col">
-                        <div class="row">
+        <div class="wrapper">
+            <div class="container">
+                <div
+                    class="row justify-content-around  p-3 my-3 bg-light border border-success-subtle rounded-4 shadow-lg">
+                    <div class="col-md-12">
+                        <div class="row mt-3">
                             <div class="col">
-                                <h5>SDT nhà cung cấp:</h5>
+                                <h2>Cồ Dũng</h2>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-primary">Check</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <label for="productCode">Mã sản phẩm:</label>
-                                <input type="text" id="productCode" class="form-control">
-                            </div>
-                            <div class="col">
-                                <label for="quantity">Số lượng:</label>
-                                <input type="number" id="quantity" class="form-control">
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-success">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Mã sản phẩm</th>
-                                <th scope="col">Tên sản phẩm</th>
-                                <th scope="col">Số lượng</th>
-                                <th scope="col">Đơn giá</th>
-                                <th scope="col">Thành tiền</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dòng sản phẩm sẽ được thêm vào đây -->
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <button class="btn btn-danger">Thanh toán</button>
-                    </div>
-                </div>
-            </form>
-          </div>
-        </div>
-      </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5>SDT nhà cung cấp:</h5>
+                                    </div>
+                                    <div class="col">
+                                        <form class="d-flex" id="searchForm" role="search">
+                                            <input class="form-control me-2 shadow-lg" type="search"
+                                                placeholder="Nhập SDT" aria-label="Search by Phone Number"
+                                                id="searchPhoneNumberInput">
+                                            <button class="btn btn-danger me-2" type="submit" data-bs-toggle="modal"
+                                                data-bs-target="#checkModal">Check</button>
+                                        </form>
+                                    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="productId">Mã sản phẩm:</label>
+                                        <select id="productId" name="productId" class="form-control">
+                                            <option value="">Chọn sản phẩm</option>
+                                            <!-- ${products.map(product => `<option value="<span class="math-inline">\{product\.productId\}"\></span>{product.productName}</option>`).join('')} -->
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="quantity">Số lượng:</label>
+                                        <input type="number" id="quantity" class="form-control">
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-success mt-4" id="addToCartButton">Thêm vào giỏ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Mã sản phẩm</th>
+                                        <th scope="col">Tên sản phẩm</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Giá bán</th>
+                                        <th scope="col">Giá nhập</th>
+                                        <th scope="col">Thành tiền nhập</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productTableBody">
+
+                                </tbody>
+                                <tfoot>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Tổng tiền: </th>
+                                    <th id="toltalAmount"></th>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <button class="btn btn-danger">Thanh toán</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="checkModal" tabindex="-1" aria-labelledby="checkModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="checkModalLabel">Kiểm tra khách hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Thông tin nhà cung cấp</strong></p>
+                        <div id="customerInfo"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="/user/signUp">
+                            <div class="text-center mt-3">
+                                <button type="submit" class="btn btn-danger">Thêm mới</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const searchForm = document.getElementById('searchForm');
+            const searchPhoneNumberInput = document.getElementById('searchPhoneNumberInput');
+            const checkModal = document.getElementById('checkModal');
+            const productTableBody = document.getElementById('productTableBody');
+
+            const addToCartButton = document.getElementById('addToCartButton');
+            const productIdInput = document.getElementById('productId');
+            const quantityInput = document.getElementById('quantity');
+            
+
+            document.addEventListener('DOMContentLoaded', () => {
+
+                searchForm.addEventListener('submit', function (event) {
+                    event.preventDefault(); // Ngăn chặn sự kiện submit mặc định của form
+
+                    const searchPhoneNumberTerm = searchPhoneNumberInput.value.trim();
+
+                    fetch(`/user/getByPhoneNumber/${searchPhoneNumberTerm}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const customerInfoElement = document.getElementById('customerInfo');
+                            const customer = data[0];
+                            if (data) {
+                                // Hiển thị thông tin khách hàng nếu có
+                                const customerDetails = `Họ tên: ${customer.name}<br>
+                                                        Email: ${customer.email}<br>
+                                                        SDT: ${customer.phoneNumber}
+                                                        `;
+                                customerInfoElement.innerHTML = customerDetails;
+                            } else {
+                                // Hiển thị thông báo không có thông tin
+                                customerInfoElement.innerHTML = 'Không có thông tin khách hàng.';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi lấy thông tin người dùng:', error);
+                            // Xử lý lỗi một cách phù hợp, ví dụ: hiển thị một thông báo lỗi trong modal
+                            document.querySelector('.modal-body').textContent = 'Đã xảy ra lỗi khi lấy thông tin người dùng.';
+                        });
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                // Gửi yêu cầu lấy danh sách sản phẩm
+                fetch('/product/product')
+                    .then(response => response.json())
+                    .then(data => {
+                        const productId = document.getElementById('productId');
+
+                        // Thêm các option vào select
+                        data.forEach(product => {
+                            const option = document.createElement('option');
+                            option.value = product.productId; // Set the value attribute
+                            option.text = product.productId; // Set the displayed text
+                            productId.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi lấy danh sách sản phẩm:', error);
+                    });
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+
+                addToCartButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    const productId = productIdInput.value;
+                    const quantity = quantityInput.value;
+
+                    if (productId && quantity) {
+                        fetch(`/product/getProductById/${productId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const existingProductRow = productTableBody.querySelector(`tr[data-product-id="${productId}"]`);
+                                console.log(totalAmount);
+                                if (existingProductRow) {
+                                    // Nếu sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng
+                                    const existingQuantity = parseInt(existingProductRow.querySelector('td:nth-child(3)').textContent);
+                                    const newQuantity = existingQuantity + parseInt(quantity);
+                                    existingProductRow.querySelector('td:nth-child(3)').textContent = newQuantity;
+                                } else {
+                                    // Nếu sản phẩm chưa có trong giỏ hàng, thêm hàng mới
+                                    
+                                    data.forEach(product => {
+                                        const row = document.createElement('tr');
+                                        const newTotalAmount =  (quantity * product.purchasePrice);
+                                        console.log(newTotalAmount);
+                                        row.setAttribute('data-product-id', productId); // Thêm thuộc tính data-product-id để xác định sản phẩm
+                                        row.innerHTML = `
+                                            <td>${productId}</td>
+                                            <td>${product.productName}</td>
+                                            <td>${quantity}</td>
+                                            <td>${product.sellingPrice}</td>
+                                            <td>${product.purchasePrice}</td>
+                                            <td>${newTotalAmount}</td>
+                                        `;
+                                        productTableBody.appendChild(row);
+                                        totalAmount = totalAmount + newTotalAmount;
+                                        console.log(totalAmount);
+                                    })
+
+                                }
+
+                            })
+                            .catch(error => {
+                                console.error('Lỗi khi lấy sản phẩm:', error);
+                            })
+
+                        // Reset giá trị của các input
+                        productIdInput.value = '';
+                        quantityInput.value = '';
+                    }
+                });
+            });
+
+        </script>
+
 </body>
 
 </html>
 
 
 <div class="container">
-    
+
 </div>

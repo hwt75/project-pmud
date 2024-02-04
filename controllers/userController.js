@@ -35,6 +35,7 @@ class UserController {
         return res.status(400).json("failed to get user data");
       });
   }
+  
   async getByPhoneNumber(req, res, next) {
     var phoneNumber = req.params.phoneNumber;
     await UserModel.getByPhoneNumber(phoneNumber)
